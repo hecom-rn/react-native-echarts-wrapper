@@ -94,6 +94,13 @@ export const getJavascriptSource = props => {
                   case "SET_BACKGROUND_COLOR":
                     setBackgroundColor(req.color);
                     break;
+                  case "SET_ZOOM":
+                     chart.dispatchAction({
+                        type: 'dataZoom',
+                        start: req.start,
+                        end: req.end
+                      });
+                    break;
                   case "GET_OPTION":
                     var option = chart.getOption();
                     var data = {};

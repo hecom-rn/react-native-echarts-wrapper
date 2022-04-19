@@ -130,6 +130,15 @@ class ECharts extends Component {
     this.postMessage(data);
   };
 
+  setDataZoom = (start, end) => {
+    const data = {
+      types: "SET_ZOOM",
+      start,
+      end
+    };
+    this.postMessage(data);
+  };
+  
   clear = () => {
     const data = {
       types: "CLEAR"
