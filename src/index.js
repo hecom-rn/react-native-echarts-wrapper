@@ -139,6 +139,22 @@ class ECharts extends Component {
     this.postMessage(data);
   };
   
+  legendUnSelect = (name) => {
+    const data = {
+      types: "legendUnSelect",
+      name
+    };
+    this.postMessage(data);
+  }
+
+  legendSelect = (name) => {
+    const data = {
+      types: "legendSelect",
+      name
+    };
+    this.postMessage(data);
+  }
+
   clear = () => {
     const data = {
       types: "CLEAR"

@@ -101,6 +101,18 @@ export const getJavascriptSource = props => {
                         end: req.end
                       });
                     break;
+                  case "legendSelect":
+                     chart.dispatchAction({
+                        type: 'legendSelect',
+                        name: req.name
+                      });
+                    break;
+                  case "legendUnSelect":
+                     chart.dispatchAction({
+                        type: 'legendUnSelect',
+                        name: req.name
+                      });
+                    break;
                   case "GET_OPTION":
                     var option = chart.getOption();
                     var data = {};
