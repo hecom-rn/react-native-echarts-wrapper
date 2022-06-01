@@ -155,6 +155,8 @@ class ECharts extends Component {
     this.postMessage(data);
   }
 
+  hideTip = () => this.postMessage({ types: 'hideTip' });
+
   clear = () => {
     const data = {
       types: "CLEAR"

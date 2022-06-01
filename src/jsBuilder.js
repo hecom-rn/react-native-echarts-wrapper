@@ -107,6 +107,11 @@ export const getJavascriptSource = props => {
                         name: req.name
                       });
                     break;
+                  case "hideTip":
+                      chart.dispatchAction({
+                        type: 'hideTip',
+                      });
+                    break;
                   case "legendUnSelect":
                      chart.dispatchAction({
                         type: 'legendUnSelect',
