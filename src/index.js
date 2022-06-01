@@ -200,6 +200,7 @@ class ECharts extends Component {
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.onLoadEnd}
+          requestDisallowInterceptTouchEvent={true}
         />
       </View>
     );
