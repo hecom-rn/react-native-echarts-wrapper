@@ -111,6 +111,10 @@ export const getJavascriptSource = props => {
                       chart.dispatchAction({
                         type: 'hideTip',
                       });
+                      chart.dispatchAction({
+                          type: 'updateAxisPointer',
+                          currTrigger: 'leave'
+                      });
                     break;
                   case "legendUnSelect":
                      chart.dispatchAction({
