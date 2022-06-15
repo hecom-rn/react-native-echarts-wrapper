@@ -151,6 +151,5 @@ export const getJavascriptSource = props => {
                 processMessage(e);
               });
 
-              ${props.additionalCode}
-        `
+              ${props.additionalCode}`
 }
