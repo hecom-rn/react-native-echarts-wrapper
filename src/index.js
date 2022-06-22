@@ -155,6 +155,22 @@ class ECharts extends Component {
     this.postMessage(data);
   }
 
+  highlight = (config = {}) => {
+    const data = {
+      types: "highlight",
+      config,
+    };
+    this.postMessage(data);
+  }
+
+  downplay = (config = {}) => {
+    const data = {
+      types: "downplay",
+      config,
+    };
+    this.postMessage(data);
+  }
+
   hideTip = () => this.postMessage({ types: 'hideTip' });
 
   clear = () => {

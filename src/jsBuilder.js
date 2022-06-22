@@ -116,6 +116,18 @@ export const getJavascriptSource = props => {
                           currTrigger: 'leave'
                       });
                     break;
+                  case "highlight":
+                     chart.dispatchAction({
+                        type: 'highlight',
+                        ...req.config
+                      });
+                    break;
+                  case "downplay":
+                     chart.dispatchAction({
+                        type: 'downplay',
+                        ...req.config
+                      });
+                    break;
                   case "legendUnSelect":
                      chart.dispatchAction({
                         type: 'legendUnSelect',
