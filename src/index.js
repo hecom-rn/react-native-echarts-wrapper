@@ -14,7 +14,8 @@ class ECharts extends Component {
     onLoadEnd: PropTypes.func,
     backgroundColor: PropTypes.string,
     customTemplatePath: PropTypes.string,
-    customSource: PropTypes.any
+    customSource: PropTypes.any,
+    requestDisallowInterceptTouchEvent: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -22,7 +23,8 @@ class ECharts extends Component {
     legacyMode: false,
     canvas: false,
     onLoadEnd: () => {},
-    backgroundColor: "rgba(0, 0, 0, 0)"
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    requestDisallowInterceptTouchEvent: true,
   };
 
   constructor(props) {
@@ -32,7 +34,7 @@ class ECharts extends Component {
   }
 
   componentDidMount() {
-    const {customSource, customTemplatePath} = this.props;
+    const { customSource, customTemplatePath } = this.props;
     if (!customSource && !customTemplatePath) {
       this.html = `
         <!DOCTYPE html>
@@ -69,7 +71,7 @@ class ECharts extends Component {
     }
   }
 
-  onMessage = e => {
+  onMessage = (e) => {
     try {
       if (!e) return null;
 
@@ -90,19 +92,16 @@ class ECharts extends Component {
     }
   };
 
-  postMessage = data => {
+  postMessage = (data) => {
     this.webview.postMessage(jsBuilder.convertToPostMessageString(data));
   };
 
-  ID = () =>
-    `_${Math.random()
-      .toString(36)
-      .substr(2, 9)}`;
+  ID = () => `_${Math.random().toString(36).substr(2, 9)}`;
 
-  setBackgroundColor = color => {
+  setBackgroundColor = (color) => {
     const data = {
       types: "SET_BACKGROUND_COLOR",
-      color
+      color,
     };
     this.postMessage(data);
   };
@@ -113,7 +112,7 @@ class ECharts extends Component {
     const data = {
       types: "GET_OPTION",
       uuid,
-      properties
+      properties,
     };
     this.postMessage(data);
   };
@@ -124,8 +123,8 @@ class ECharts extends Component {
       payload: {
         option,
         notMerge: notMerge || false,
-        lazyUpdate: lazyUpdate || false
-      }
+        lazyUpdate: lazyUpdate || false,
+      },
     };
     this.postMessage(data);
   };
@@ -134,26 +133,26 @@ class ECharts extends Component {
     const data = {
       types: "SET_ZOOM",
       start,
-      end
+      end,
     };
     this.postMessage(data);
   };
-  
+
   legendUnSelect = (name) => {
     const data = {
       types: "legendUnSelect",
-      name
+      name,
     };
     this.postMessage(data);
-  }
+  };
 
   legendSelect = (name) => {
     const data = {
       types: "legendSelect",
-      name
+      name,
     };
     this.postMessage(data);
-  }
+  };
 
   highlight = (config = {}) => {
     const data = {
@@ -161,7 +160,7 @@ class ECharts extends Component {
       config,
     };
     this.postMessage(data);
-  }
+  };
 
   downplay = (config = {}) => {
     const data = {
@@ -169,18 +168,18 @@ class ECharts extends Component {
       config,
     };
     this.postMessage(data);
-  }
+  };
 
-  hideTip = () => this.postMessage({ types: 'hideTip' });
+  hideTip = () => this.postMessage({ types: "hideTip" });
 
   clear = () => {
     const data = {
-      types: "CLEAR"
+      types: "CLEAR",
     };
     this.postMessage(data);
   };
 
-  getWebViewRef = ref => {
+  getWebViewRef = (ref) => {
     this.webview = ref;
   };
 
@@ -197,12 +196,12 @@ class ECharts extends Component {
       source = this.props.customSource;
     } else if (this.props.customTemplatePath) {
       source = {
-        uri: this.props.customTemplatePath
+        uri: this.props.customTemplatePath,
       };
     } else {
       source = {
         html: this.html,
-        baseUrl: ""
+        baseUrl: "",
       };
     }
 
@@ -218,7 +217,9 @@ class ECharts extends Component {
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.onLoadEnd}
-          requestDisallowInterceptTouchEvent={true}
+          requestDisallowInterceptTouchEvent={
+            this.props.requestDisallowInterceptTouchEvent
+          }
         />
       </View>
     );
