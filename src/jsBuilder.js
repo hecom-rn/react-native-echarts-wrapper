@@ -1,28 +1,46 @@
-import { Platform } from "react-native"
+import { Platform } from "react-native";
+import Toast from "react-native-root-toast";
 
-export const convertToPostMessageString = obj => {
-  return JSON.stringify(obj, (key, val) => {
-    if (typeof val === "function") {
-      return new Function("return " + val.toString())
+export const convertToPostMessageString = (obj) => {
+  try {
+    return JSON.stringify(obj, (key, val) => {
+      if (typeof val === "function") {
+        return new Function("return " + val.toString());
+      }
+      return val;
+    });
+  } catch (error) {
+    if (error.message === "Invalid string length") {
+      Toast.show("图表数据过大,请调整后查看");
+    } else {
+      Toast.show("图表数据错误");
     }
-    return val
-  })
-}
+    return JSON.stringify({});
+  }
+};
 
-export const toString = obj => {
-  if (obj === undefined) return JSON.stringify({})
-
-  return JSON.stringify(obj, (key, val) => {
-    if (typeof val === "function") {
-      return val.toString()
+export const toString = (obj) => {
+  if (obj === undefined) return JSON.stringify({});
+  try {
+    return JSON.stringify(obj, (key, val) => {
+      if (typeof val === "function") {
+        return val.toString();
+      }
+      return val;
+    });
+  } catch (error) {
+    if (error.message === "Invalid string length") {
+      Toast.show("图表数据过大,请调整后查看");
+    } else {
+      Toast.show("图表数据错误");
     }
-    return val
-  })
-}
+    return JSON.stringify({});
+  }
+};
 
-export const getJavascriptSource = props => {
-  const { OS } = Platform
-  const renderer = "canvas"
+export const getJavascriptSource = (props) => {
+  const { OS } = Platform;
+  const renderer = "canvas";
 
   return `
              var chart = echarts.init(document.getElementById('main'), undefined, {renderer: '${renderer}'});
@@ -163,5 +181,5 @@ export const getJavascriptSource = props => {
                 processMessage(e);
               });
 
-              ${props.additionalCode}`
-}
+              ${props.additionalCode}`;
+};
