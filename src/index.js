@@ -3,7 +3,6 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import { WebView } from "react-native-webview";
 
-import { getMinifiedEChartsFramework } from "./chartconfig";
 import * as jsBuilder from "./jsBuilder";
 
 class ECharts extends Component {
@@ -31,44 +30,6 @@ class ECharts extends Component {
     super(props);
     this.onGetHeight = null;
     this.callbacks = {};
-  }
-
-  componentDidMount() {
-    const { customSource, customTemplatePath } = this.props;
-    if (!customSource && !customTemplatePath) {
-      this.html = `
-        <!DOCTYPE html>
-        <html lang="de">
-          <head>
-              <meta http-equiv="content-type" content="text/html; charset=utf-8">
-              <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
-              <style type="text/css">
-                  html,body {
-                  height: 100%;
-                  width: 100%;
-                  margin: 0;
-                  padding: 0;
-                  background-color:rgba(0, 0, 0, 0);
-                  }
-                  #main {
-                  height: 100%;
-                  width: 100%;
-                  background-color:rgba(0, 0, 0, 0);
-                  }
-              </style>
-              
-              <script>
-                  ${getMinifiedEChartsFramework()}
-              </script>
-          </head>
-
-          <body>
-              <div id="main">
-              </div>
-          </body>
-
-        </html>`;
-    }
   }
 
   onMessage = (e) => {
@@ -197,11 +158,6 @@ class ECharts extends Component {
     } else if (this.props.customTemplatePath) {
       source = {
         uri: this.props.customTemplatePath,
-      };
-    } else {
-      source = {
-        html: this.html,
-        baseUrl: "",
       };
     }
 
