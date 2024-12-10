@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { WebView } from "react-native-webview";
 
@@ -146,7 +146,7 @@ class ECharts extends Component {
 
   onLoadEnd = () => {
     if (this.webview) {
-      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
+       Platform.OS !== 'harmony' && this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
     }
     this.props.onLoadEnd();
   };
@@ -160,14 +160,16 @@ class ECharts extends Component {
         uri: this.props.customTemplatePath,
       };
     }
-
+    if ( Platform.OS === 'harmony') {
+      source = { html: jsBuilder.getHarmonyHtml(this.props) }
+    }
     return (
       <View style={{ flex: 1 }}>
         <WebView
           ref={this.getWebViewRef}
           originWhitelist={["*"]}
           scrollEnabled={false}
-          source={source}
+          source={source} 
           style={{ opacity: 0.99 }} // 处理android 在webView中的crash
           onMessage={this.onMessage}
           allowFileAccess
