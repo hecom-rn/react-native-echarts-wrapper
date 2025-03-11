@@ -145,10 +145,7 @@ class ECharts extends Component {
   };
 
   onLoadEnd = () => {
-    if (this.webview) {
-       Platform.OS !== 'harmony' && this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
-    }
-    this.props.onLoadEnd();
+    this.props.onLoadEnd?.();
   };
 
   render() {
@@ -160,9 +157,6 @@ class ECharts extends Component {
         uri: this.props.customTemplatePath,
       };
     }
-    if ( Platform.OS === 'harmony') {
-      source = { html: jsBuilder.getHarmonyHtml(this.props) }
-    }
     return (
       <View style={{ flex: 1 }}>
         <WebView
@@ -170,6 +164,7 @@ class ECharts extends Component {
           originWhitelist={["*"]}
           scrollEnabled={false}
           source={source} 
+          injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
           style={{ opacity: 0.99 }} // 处理android 在webView中的crash
           onMessage={this.onMessage}
           allowFileAccess
