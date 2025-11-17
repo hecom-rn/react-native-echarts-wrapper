@@ -168,7 +168,7 @@ class ECharts extends Component {
           originWhitelist={["*"]}
           scrollEnabled={false}
           source={source}
-          style={{ opacity: 0.99 }} // 处理android 在webView中的crash
+          style={{ opacity: 0.99, backgroundColor: 'transparent'  }} // 处理android 在webView中的crash
           onMessage={this.onMessage}
           allowFileAccess
           allowUniversalAccessFromFileURLs
