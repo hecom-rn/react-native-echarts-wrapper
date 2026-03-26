@@ -165,7 +165,7 @@ class ECharts extends Component {
           scrollEnabled={false}
           source={source} 
           injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
-          style={{ opacity: 0.99 }} // 处理android 在webView中的crash
+          style={{ opacity: 0.99, backgroundColor: 'transparent'  }} // 处理android 在webView中的crash
           onMessage={this.onMessage}
           allowFileAccess
           allowUniversalAccessFromFileURLs
