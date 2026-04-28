@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, Platform } from "react-native";
 import PropTypes from "prop-types";
+import { Component } from "react";
+import { View } from "react-native";
 import { WebView } from "react-native-webview";
 
 import * as jsBuilder from "./jsBuilder";
@@ -14,7 +16,6 @@ class ECharts extends Component {
     backgroundColor: PropTypes.string,
     customTemplatePath: PropTypes.string,
     customSource: PropTypes.any,
-    requestDisallowInterceptTouchEvent: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -23,7 +24,6 @@ class ECharts extends Component {
     canvas: false,
     onLoadEnd: () => {},
     backgroundColor: "rgba(0, 0, 0, 0)",
-    requestDisallowInterceptTouchEvent: true,
   };
 
   constructor(props) {
@@ -160,6 +160,7 @@ class ECharts extends Component {
     return (
       <View style={{ flex: 1 }}>
         <WebView
+          {...this.props}
           ref={this.getWebViewRef}
           originWhitelist={["*"]}
           scrollEnabled={false}
@@ -171,9 +172,6 @@ class ECharts extends Component {
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.onLoadEnd}
-          requestDisallowInterceptTouchEvent={
-            this.props.requestDisallowInterceptTouchEvent
-          }
         />
       </View>
     );
