@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Platform } from "react-native";
 import PropTypes from "prop-types";
-import { Component } from "react";
 import { View } from "react-native";
 import { WebView } from "react-native-webview";
 
