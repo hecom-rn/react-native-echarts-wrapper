@@ -1,6 +1,6 @@
+import React, { Component } from "react";
+import { View, Platform } from "react-native";
 import PropTypes from "prop-types";
-import { Component } from "react";
-import { View } from "react-native";
 import { WebView } from "react-native-webview";
 
 import * as jsBuilder from "./jsBuilder";
@@ -143,10 +143,7 @@ class ECharts extends Component {
   };
 
   onLoadEnd = () => {
-    if (this.webview) {
-      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
-    }
-    this.props.onLoadEnd();
+    this.props.onLoadEnd?.();
   };
 
   render() {
@@ -158,7 +155,6 @@ class ECharts extends Component {
         uri: this.props.customTemplatePath,
       };
     }
-
     return (
       <View style={{ flex: 1 }}>
         <WebView
@@ -166,7 +162,8 @@ class ECharts extends Component {
           ref={this.getWebViewRef}
           originWhitelist={["*"]}
           scrollEnabled={false}
-          source={source}
+          source={source} 
+          injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
           style={{ opacity: 0.99, backgroundColor: 'transparent'  }} // 处理android 在webView中的crash
           onMessage={this.onMessage}
           allowFileAccess
